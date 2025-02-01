@@ -115,6 +115,18 @@ class ViewController: UIViewController {
         resetLabel()
     }
 
+    @IBAction func unwindAction(unwindSegue: UIStoryboardSegue) {
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "CALCULATIONS_LIST",
+              let calculationsListViewController = segue.destination as? CalculationsListViewController
+        else {return}
+        
+        calculationsListViewController.result = label.text
+    }
+    
     func calculate() throws -> Double {
         guard case .number(let firstNumber) = calculationHistory[0] else {return 0}
         
