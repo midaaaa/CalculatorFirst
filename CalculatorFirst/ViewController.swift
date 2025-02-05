@@ -48,6 +48,10 @@ class ViewController: UIViewController {
             return
         }
         
+        if label.text == "Undefined" {
+            resetLabel()
+        }
+        
         if label.text == "0" && buttonText != "," {
             label.text = buttonText
         } else {
@@ -83,11 +87,19 @@ class ViewController: UIViewController {
             let labelNumber = numberFormatter.number(from: labelText)?.doubleValue
             else {return}
         
+        let hasOperation = calculationHistory.contains { item in
+            if case .operation(_) = item { return true }
+            return false
+        }
+        
+        if !hasOperation { return }
+        
         calculationHistory.append(.number(labelNumber))
         
         do {
             let result = try calculate()
             label.text = numberFormatter.string(from: NSNumber(value: result))
+            calculations.append((calculationHistory, result))
         } catch {
             label.text = "Undefined"
         }
@@ -98,6 +110,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var label: UILabel!
     
     var calculationHistory: [CalculationHistoryItem] = []
+    var calculations: [(expression: [CalculationHistoryItem], result: Double)] = []
     
     lazy var numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
@@ -114,17 +127,16 @@ class ViewController: UIViewController {
         
         resetLabel()
     }
-
-    @IBAction func unwindAction(unwindSegue: UIStoryboardSegue) {
+  
+    @IBAction func showCalculationsList(_ sender: Any) {
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let calculationsListVC = sb.instantiateViewController(withIdentifier: "CalculationsListViewController")
+        if let vc = calculationsListVC as? CalculationsListViewController {
+            vc.calculations = calculations
+        }
         
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "CALCULATIONS_LIST",
-              let calculationsListViewController = segue.destination as? CalculationsListViewController
-        else {return}
-        
-        calculationsListViewController.result = label.text
+        show(calculationsListVC, sender: self)
+        navigationController?.pushViewController(calculationsListVC, animated: true)
     }
     
     func calculate() throws -> Double {
@@ -137,7 +149,7 @@ class ViewController: UIViewController {
                   case .number(let number) = calculationHistory[index + 1]
             else {break}
             
-            currentResult = try  operation.calculate(currentResult, number )
+            currentResult = try  operation.calculate(currentResult, number)
         }
         return currentResult
     }
