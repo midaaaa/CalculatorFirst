@@ -99,7 +99,9 @@ class ViewController: UIViewController {
         do {
             let result = try calculate()
             label.text = numberFormatter.string(from: NSNumber(value: result))
-            calculations.append((calculationHistory, result))
+            let newCalculation = Calculation(expression: calculationHistory, result: result)
+            calculations.append(newCalculation)
+            calculationHistoryStorage.setHistory(calculation: calculations)
         } catch {
             label.text = "Undefined"
         }
@@ -110,7 +112,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var label: UILabel!
     
     var calculationHistory: [CalculationHistoryItem] = []
-    var calculations: [(expression: [CalculationHistoryItem], result: Double)] = []
+    var calculations: [Calculation] = []
+    
+    let calculationHistoryStorage = CalculationHistoryStorage()
     
     lazy var numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
@@ -126,6 +130,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         resetLabel()
+        calculations = calculationHistoryStorage.loadHistory()
     }
   
     @IBAction func showCalculationsList(_ sender: Any) {
