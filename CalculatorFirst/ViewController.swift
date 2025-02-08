@@ -104,6 +104,7 @@ class ViewController: UIViewController {
             calculationHistoryStorage.setHistory(calculation: calculations)
         } catch {
             label.text = "Undefined"
+            label.shake()
         }
         
         calculationHistory.removeAll()
@@ -131,8 +132,21 @@ class ViewController: UIViewController {
         
         resetLabel()
         calculations = calculationHistoryStorage.loadHistory()
+        
+        view.subviews.forEach { subview in
+            if let button = subview as? UIButton {
+                button.layer.cornerRadius = button.frame.size.width / 2
+                button.clipsToBounds = true
+                button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchDown)
+            }
+        }
+        
     }
   
+    @objc func buttonTapped(_ sender: UIButton) {
+        sender.animateTap()
+    }
+    
     @IBAction func showCalculationsList(_ sender: Any) {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let calculationsListVC = sb.instantiateViewController(withIdentifier: "CalculationsListViewController")
@@ -162,7 +176,32 @@ class ViewController: UIViewController {
     func resetLabel() {
         label.text = "0"
     }
-    
 }
 
- 
+extension UILabel {
+    
+    func shake() {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.05
+        animation.repeatCount = 3
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: center.x - 10, y: center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: center.x + 10, y: center.y))
+        
+        layer.add(animation, forKey: "position")
+    }
+}
+
+
+extension UIButton {
+    
+    func animateTap() {
+        let lightenAnimation = CAKeyframeAnimation(keyPath: "opacity")
+        lightenAnimation.duration = 0.1
+        lightenAnimation.values = [1, 0.5]
+        lightenAnimation.keyTimes = [0, 1]
+        lightenAnimation.autoreverses = true
+                            
+        layer.add(lightenAnimation, forKey: "lightenAnimation")
+    }
+}
