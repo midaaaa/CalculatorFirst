@@ -1,0 +1,8 @@
+# ignore Xcode files
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+*.xcworkspace/*
+!*.xcworkspace/contents.xcworkspacedata
+
+# Ignore system files
+.DS_Store

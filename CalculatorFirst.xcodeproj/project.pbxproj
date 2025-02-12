@@ -6,8 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0187FA6E2D5D48EB00EB4567 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 0187FA6D2D5D48EB00EB4567 /* .gitignore */; };
+		0187FA702D5D493700EB4567 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0187FA6F2D5D493700EB4567 /* README.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		0179C6852D4A633B00956CDE /* CalculatorFirst.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalculatorFirst.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0187FA6D2D5D48EB00EB4567 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		0187FA6F2D5D493700EB4567 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -29,6 +36,11 @@
 			path = CalculatorFirst;
 			sourceTree = "<group>";
 		};
+		0187FA732D5D499800EB4567 /* assets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = assets;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +57,9 @@
 		0179C67C2D4A633B00956CDE = {
 			isa = PBXGroup;
 			children = (
+				0187FA732D5D499800EB4567 /* assets */,
+				0187FA6F2D5D493700EB4567 /* README.md */,
+				0187FA6D2D5D48EB00EB4567 /* .gitignore */,
 				0179C6872D4A633B00956CDE /* CalculatorFirst */,
 				0179C6862D4A633B00956CDE /* Products */,
 			);
@@ -75,6 +90,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				0179C6872D4A633B00956CDE /* CalculatorFirst */,
+				0187FA732D5D499800EB4567 /* assets */,
 			);
 			name = CalculatorFirst;
 			packageProductDependencies = (
@@ -122,6 +138,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0187FA702D5D493700EB4567 /* README.md in Resources */,
+				0187FA6E2D5D48EB00EB4567 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

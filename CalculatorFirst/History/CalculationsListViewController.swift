@@ -10,7 +10,8 @@ import UIKit
 class CalculationsListViewController: UIViewController {
     
     var calculations: [Calculation] = []
-    @IBOutlet weak var calculationLabel: UILabel!
+    let calculationHistoryStorage = CalculationHistoryStorage()
+
     @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
@@ -33,6 +34,15 @@ class CalculationsListViewController: UIViewController {
     
     @IBAction func dismissVC(_ sender: Any) {
         dismiss(animated: true)
+    }
+    
+    @IBAction func clearHistoryPressed(_ sender: UIButton) {
+        calculations.removeAll()
+        calculationHistoryStorage.setHistory(calculation: calculations)
+        if let calculationsListVC = presentedViewController as? CalculationsListViewController {
+            calculationsListVC.calculations = calculations
+            calculationsListVC.tableView.reloadData()
+        }
     }
     
     private func expressionToString(_ expression: [CalculationHistoryItem]) -> String {

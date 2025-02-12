@@ -100,7 +100,8 @@ class ViewController: UIViewController {
             let result = try calculate()
             label.text = numberFormatter.string(from: NSNumber(value: result))
             let newCalculation = Calculation(expression: calculationHistory, result: result)
-            calculations.append(newCalculation)
+            //calculations.append(newCalculation)
+            calculations.insert(newCalculation, at: 0)
             calculationHistoryStorage.setHistory(calculation: calculations)
         } catch {
             label.text = "Undefined"
@@ -140,7 +141,6 @@ class ViewController: UIViewController {
                 button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchDown)
             }
         }
-        
     }
   
     @objc func buttonTapped(_ sender: UIButton) {
